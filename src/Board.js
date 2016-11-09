@@ -134,6 +134,17 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var dimensions = this.get('n');
+      var diagLength = dimensions - majorDiagonalColumnIndexAtFirstRow;
+      var stepIndex = majorDiagonalColumnIndexAtFirstRow;
+      var tempDiagArr = [];
+      var row = this.get(0);
+      for (var i = 0; i < dimensions; i++) {
+        
+      }
+
+
+      //search for index of 1 in the first row 
       return false; // fixme
     },
 
