@@ -138,7 +138,6 @@
       var dimensions = this.get('n');
       var tempDiagArr = [];
       var matrix = this.rows();
-      //check long diag arr
       var diagLength = (startInd >= 0) ? (dimensions - startInd) : (dimensions + startInd);
 
       if (startInd >= 0) {
@@ -156,12 +155,17 @@
           }
         }
       }
-      return false; // fixme
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      console.log(this.rows());
+      var dimensions = this.get('n');
+      for (var i = (- dimensions + 1); i < dimensions; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -172,11 +176,39 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var startInd = minorDiagonalColumnIndexAtFirstRow;
+      var dimensions = this.get('n');
+      var tempDiagArr = [];
+      var matrix = this.rows();
+
+      if (startInd < dimensions) {
+        var diagLength = startInd + 1;
+        for (var i = 0; i < diagLength; i++) {
+          tempDiagArr.push(matrix[i][startInd - i]);
+          if (tempDiagArr.indexOf(1) !== tempDiagArr.lastIndexOf(1)) {
+            return true;
+          }
+        }
+      } else {
+        var diagLength = dimensions;
+        for (var j = startInd - (diagLength - 1); j < diagLength; j++) {
+          tempDiagArr.push(matrix[j][startInd - j]);
+          if (tempDiagArr.indexOf(1) !== tempDiagArr.lastIndexOf(1)) {
+            return true;
+          }
+        }
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var dimensions = (this.get('n') * 2) - 1;
+      for (var i = 0; i < dimensions; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
